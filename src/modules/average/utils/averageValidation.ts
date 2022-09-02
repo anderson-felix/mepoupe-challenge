@@ -3,7 +3,7 @@ import { Joi } from 'celebrate';
 export const joiAverageValidation = Joi.custom((value, helper) => {
   if (isNaN(Number(value)))
     return helper.message('O valor precisa ser um número' as any);
-  return true;
+  return value;
 });
 
 export const throwAverageError = () => {

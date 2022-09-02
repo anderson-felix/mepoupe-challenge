@@ -84,8 +84,6 @@ jobs:
           command: |
             cd ~/backend
 
-            mkdir -p tmp
-
             # install dependencies
             docker run --rm --volume "$PWD:/home/app" -w "/home/app" node:lts yarn --production
 
