@@ -6,14 +6,14 @@ import { LogEnumType } from '@modules/log/interfaces';
 import { IPagingTypeORM } from '@shared/infra/http/middlewares/getPagingHandler';
 import Log from '@modules/log/infra/typeorm/entities/Log';
 import { IPagingResponse } from '@shared/utils';
+import {
+  formatLogEntity,
+  IFormattedLog,
+} from '@modules/log/utils/formatLogEntity';
 
 interface IRequest {
   firstValue: number;
   secondValue: number;
-}
-
-interface IFormattedLog extends Omit<Log, 'created_at'> {
-  created_at: string;
 }
 
 @injectable()
@@ -30,10 +30,7 @@ export class ListLogsService {
 
     return {
       ...logs,
-      results: logs.results.map(log => ({
-        ...log,
-        created_at: new Date(log.created_at).toTimeString(),
-      })),
+      results: logs.results.map(formatLogEntity),
     };
   }
 }
