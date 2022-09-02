@@ -1,6 +1,6 @@
 Essa API já está em ambiente de produção. Para consultar acesse https://api.mepoupe.darklabs.com.br
 
-Para iniciar a aplicação em ambiente de desenvolvimento, execute o seguinte comando:
+Para iniciar a aplicação em ambiente de desenvolvimento, copie e renomeie os arquivos ".env.example" para ".env" e "ormconfig.example.json" para "ormconfig.json", em seguida execute o seguinte comando:
 
 `yarn image:build && yarn up && yarn typeorm migration:run && yarn logs`
 
