@@ -19,6 +19,10 @@ export class CreateLogTable1662085903816 implements MigrationInterface {
             type: 'json',
           },
           {
+            name: 'detail',
+            type: 'varchar',
+          },
+          {
             name: 'type',
             type: 'enum',
             enum: logEnumArray,

@@ -21,7 +21,12 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
-
+    "import/no-extraneous-dependencies": "off",
+    "import/no-unresolved": "off",
+    "import/named": "off",
+    "import/no-duplicates": "off",
+    "import/order": "off",
+    "import/no-self-import": "off",
     "no-restricted-globals": "off",
     "guard-for-in": "off",
     "max-classes-per-file": "off",
@@ -34,7 +39,13 @@
     "import/no-cycle": "off",
     "camelcase": "off",
     "no-return-await": "off",
+    "import/no-useless-path-segments": "off",
+    "import/export": "off",
     "no-loop-func": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
     "no-restricted-syntax": "off",
     "no-unused-expressions": "off",
     "no-plusplus": "off",
@@ -44,7 +55,6 @@
     "no-underscore-dangle": "off",
     "allowForLoopAfterthoughts": "off",
     "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "prettier/prettier": [
       "error",
       {
@@ -53,7 +63,7 @@
     ],
 
     "import/extensions": [
-      "error",
+      "off",
       "ignorePackages",
       {
         "ts": "never",

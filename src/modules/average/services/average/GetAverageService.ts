@@ -25,6 +25,7 @@ export class GetAverageService {
     await this.logRepository.create({
       type: LogEnumType.average,
       content: { firstValue, secondValue, result },
+      detail: `Math operation: (${firstValue} + ${secondValue}) / 2 = ${result}`,
     });
 
     return result;

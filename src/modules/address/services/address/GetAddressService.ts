@@ -1,10 +1,10 @@
 import { injectable, inject } from 'tsyringe';
+import axios from 'axios';
 
 import { LocaleError } from '@shared/errors/LocaleError';
 import { IAddress } from '@modules/address/interfaces';
 import ILogRepository from '@modules/log/repositories/ILogRepository';
 import { LogEnumType } from '@modules/log/interfaces';
-import axios from 'axios';
 import { parseZipcode } from '@shared/utils';
 
 const BASE_URL = 'https://viacep.com.br/ws/';
@@ -29,35 +29,44 @@ export class GetAddressService {
     private logRepository: ILogRepository,
   ) {}
 
-  public async execute(zipcode: string): Promise<IAddress> {
-    this.validateZipcode(zipcode);
+  public async execute(zipCode: string): Promise<IAddress> {
+    this.validateZipcode(zipCode);
 
-    const address = await this.getAddressByZipCode(zipcode);
+    const address = await this.getAddressByZipCode(parseZipcode(zipCode));
 
     await this.logRepository.create({
       type: LogEnumType.address,
       content: address,
+      detail: `Service called: ${BASE_URL}${zipCode}/json`,
     });
 
     return address;
   }
 
-  private validateZipcode(zipcode: string): void {
-    if (!zipcode) throw new LocaleError('zipcodeRequired');
+  private validateZipcode(zipCode: string): void {
+    if (!zipCode) throw new LocaleError('zipcodeRequired');
 
-    const zipcodeIsValid = !!zipcode.match(/^\d{5}-?\d{3}$/);
+    const zipcodeIsValid = !!zipCode.match(/^\d{5}-?\d{3}$/);
     if (!zipcodeIsValid) throw new LocaleError('invalidZipcode');
   }
 
-  private async getAddressByZipCode(zipcode: string): Promise<IAddress> {
+  private async getAddressByZipCode(zipCode: number): Promise<IAddress> {
     try {
       const api = axios.create({ baseURL: BASE_URL });
 
-      const { data } = await api.get<IAddressFullData>(`/${zipcode}/json`);
+      const { data } = await api.get<IAddressFullData>(`/${zipCode}/json`);
 
       return this.formatAddress(data);
     } catch {
-      throw new LocaleError('invalidZipcode');
+      const zipCodeStr = String(zipCode);
+
+      const readableZipCode = `${zipCodeStr.slice(0, -3)}-${zipCodeStr.slice(
+        -3,
+      )}`;
+
+      throw new Error(
+        `Nenhuma informação encontrada para o CEP: ${readableZipCode}`,
+      );
     }
   }
 
