@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import AddressController from '../controllers/AddressController';
+import { throwAddressError } from '@modules/address/utils/addressValidation';
 
 const addressRouter = Router();
 
@@ -14,5 +15,7 @@ addressRouter.get(
   }),
   AddressController.get,
 );
+
+addressRouter.get('/', throwAddressError);
 
 export default addressRouter;

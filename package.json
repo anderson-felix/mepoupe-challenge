@@ -15,9 +15,9 @@
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "typeorm": "docker exec -it backend yarn ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "eslint:fix": "eslint --fix --ext .js,.ts src",
+    "test:db": "docker exec -it db psql -U postgres -c 'create database test;'",
     "test": "jest",
-    "test:watch": "jest --watchAll",
-    "test:cov": "jest --forceExit --coverage --noStackTrace && xdg-open coverage/lcov-report/index.html &> /dev/null &"
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -44,6 +44,7 @@
     "@types/faker": "5.5",
     "@types/jest": "^29.0.0",
     "@types/node": "17.0.13",
+    "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "4.28.4",
     "@typescript-eslint/parser": "4.28.4",
     "babel-plugin-module-resolver": "4.1.0",
@@ -57,6 +58,7 @@
     "faker": "5.5.3",
     "jest": "^29.0.1",
     "prettier": "^2.3.2",
+    "supertest": "6.2.4",
     "ts-jest": "^28.0.8",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^3.9.0",

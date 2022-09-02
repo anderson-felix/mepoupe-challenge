@@ -31,7 +31,10 @@ export default {
   coveragePathIgnorePatterns: [
     '<rootDir>/node_modules',
     '<rootDir>/dist',
+    '<rootDir>/src/config',
     '<rootDir>/src/shared/errors',
+    '<rootDir>/src/modules/log/__tests__/mocks',
+    '<rootDir>/src/shared/infra/typeorm/migrations',
   ],
 
   // The glob patterns Jest uses to detect test files

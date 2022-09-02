@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import { LocaleError } from '@shared/errors/LocaleError';
 import ILogRepository from '@modules/log/repositories/ILogRepository';
 import { LogEnumType } from '@modules/log/interfaces';
+import { makeLogDetail } from '@shared/utils';
 
 interface IRequest {
   firstValue: number;
@@ -25,7 +26,11 @@ export class GetAverageService {
     await this.logRepository.create({
       type: LogEnumType.average,
       content: { firstValue, secondValue, result },
-      detail: `Math operation: (${firstValue} + ${secondValue}) / 2 = ${result}`,
+      detail: makeLogDetail(LogEnumType.average, {
+        firstValue,
+        secondValue,
+        result,
+      }),
     });
 
     return result;

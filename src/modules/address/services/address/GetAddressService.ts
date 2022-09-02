@@ -5,7 +5,7 @@ import { LocaleError } from '@shared/errors/LocaleError';
 import { IAddress } from '@modules/address/interfaces';
 import ILogRepository from '@modules/log/repositories/ILogRepository';
 import { LogEnumType } from '@modules/log/interfaces';
-import { parseZipcode } from '@shared/utils';
+import { parseZipCode, makeLogDetail } from '@shared/utils';
 
 const BASE_URL = 'https://viacep.com.br/ws/';
 
@@ -32,12 +32,12 @@ export class GetAddressService {
   public async execute(zipCode: string): Promise<IAddress> {
     this.validateZipcode(zipCode);
 
-    const address = await this.getAddressByZipCode(parseZipcode(zipCode));
+    const address = await this.getAddressByZipCode(parseZipCode(zipCode));
 
     await this.logRepository.create({
       type: LogEnumType.address,
       content: address,
-      detail: `Service called: ${BASE_URL}${zipCode}/json`,
+      detail: makeLogDetail(LogEnumType.address, `${BASE_URL}${zipCode}/json`),
     });
 
     return address;
@@ -76,7 +76,7 @@ export class GetAddressService {
       city: data.localidade,
       district: data.bairro,
       state: data.uf,
-      zipcode: parseZipcode(data.cep),
+      zipcode: parseZipCode(data.cep),
     };
   }
 }

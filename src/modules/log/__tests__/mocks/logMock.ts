@@ -2,9 +2,11 @@ import faker from 'faker';
 
 import Log from '@modules/log/infra/typeorm/entities/Log';
 import { ILogAddress, ILogAverage, LogEnumType } from '@modules/log/interfaces';
+import { makeLogDetail } from '@shared/utils';
 
 interface MockParams {
   content?: ILogAddress | ILogAverage;
+  detail?: string;
   type?: LogEnumType;
   created_at?: Date;
 }
@@ -13,7 +15,6 @@ type MockType = (params?: MockParams) => Log;
 
 const logMock: MockType = params => {
   const createdAt = faker.date.past(1.5);
-
   const addressContent = {
     address: 'Rua Uberaba',
     city: 'Ribeirão Preto',
@@ -30,15 +31,18 @@ const logMock: MockType = params => {
 
   const randomNumber = Math.ceil(Math.random() * 10);
 
-  console.log('123123');
   const content = randomNumber > 5 ? addressContent : averageContent;
-  console.log('content: ', content);
   const type = randomNumber > 5 ? LogEnumType.address : LogEnumType.average;
-  console.log('type: ', type);
+
+  const detail = makeLogDetail(
+    type,
+    randomNumber > 5 ? 'test suite' : averageContent,
+  );
 
   return {
     id: faker.datatype.uuid(),
     content: params?.content || content,
+    detail: params?.detail || detail,
     type: params?.type || type,
     created_at: params?.created_at || createdAt,
   };

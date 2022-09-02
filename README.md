@@ -1,45 +1,41 @@
-Crie um projeto Node.JS e implemente os seguintes 2 endPoints:
+Essa API já está em ambiente de produção. Para consultar acesse https://api.mepoupe.darklabs.com.br
 
-1.- Cálculo da média
+Para iniciar a aplicação em ambiente de desenvolvimento, execute o seguinte comando:
 
-Precisamos fazer o cálculo da média de 2 números, para isto será necessário ter um endpoint que receba esses 2 números e nos retorne a média dos mesmos.
+`yarn image:build && yarn up && yarn typeorm migration:run && yarn logs`
 
-O resultado precisa estar arredondado em duas casas decimais utilizando a estratégia de arredondamento Half Round Up.
+Os endpoints dísponíveis são:
 
-O mesmo precisará rodar num docker, para isto o projeto tem que estar corretamente conteinerizado/dockerizado.
+- _Busca de endereço baseada em CEP_
 
-Temos que ter tratamento de erro caso os parâmetros estejam errados, inválidos ou inexistentes.
+` GET http://localhost:5000/address/:CEP`
 
-Precisamos implementar Log para saber o que está acontecendo, ou seja, que cálculos estão sendo feitos neste componente.
+- _Cálculo da média entre dois valores_
 
-Comite seu código.
+`GET http://localhost:5000/average/:valor1/:valor2`
 
-2.- Consulta de CEP.
+- _Listagem todos as operações processadas com filtragem e paginação_
 
-Precisamos criar um outro endPoint que receba um cep e que o mesmo faça uma consulta deste CEP na viaCEP (https://viacep.com.br/)
+`GET http://localhost:5000/logs`
 
-O Serviço que precisa ser chamado no ViaCEP é o seguinte: https://viacep.com.br/ws/XXXXXXXX/json
+**Query filtering examples**
 
-Onde o XXXXXXXX é um Cep válido.
+- _paginação_
 
-Este endereço tem que ser retornado para o chamador, caso o Bairro não seja encontrado na ViaCEP, além do resto das informações, uma mensagem tem que ser retornada para o cliente informando que não foi possível encontrar o Bairro deste CEP. Exemplo de CEP sem Bairro :18150000
+` http://localhost:5000/logs?limit=10&page=2`
 
-Comite seu código.
+- _por coluna específica_
 
-Use TypeScript.
+` http://localhost:5000/logs?type=address`
 
-Divida em camadas de responsabilidade única, com classes e métodos coesos. Vá pela simplicidade do código.
+- _por palavras chave CASE SENSITIVE_
 
-Implemente testes automatizados.
+` http://localhost:5000/logs?detail.has=operation`
 
-Finalmente, crie um projeto GitHub, suba seu código e adicione christian.pacheco@mepoupenaweb.com para poder validar.
+- _por palavras chave CASE INSENSITIVE_
 
-Boa sorte e na dúvida use sua criatividade.
+` http://localhost:5000/logs?detail.ihas=operation`
 
-Ahhh, faltou a data de entrega: sexta-feira, 02.09, às 9h. Caso não consiga enviar por aqui, pode enviar para o e-mail duda.silva@mepoupenaweb.com
+- _ordenação por colunas especifícas de forma crescente ou decrescente_
 
-Te aguardamos!
-
-Beijos!
-
-Avisar que fiz em usando postgres pq tenho mais prática e não tinha tempo, caso contrário teria usado redis.
+` http://localhost:5000/logs?sort=created_at&order=desc`
