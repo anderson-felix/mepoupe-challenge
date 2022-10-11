@@ -1,7 +1,3 @@
-## Essa API já está em ambiente de produção. Para consultar acesse **https://api.mepoupe.darklabs.com.br**
-
----
-
 ## **SETUP**
 
 ### Para iniciar a aplicação em ambiente de desenvolvimento, copie e renomeie os arquivos ".env.example" para ".env" e "ormconfig.example.json" para "ormconfig.json", em seguida execute o comando:
