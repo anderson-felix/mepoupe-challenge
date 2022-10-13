@@ -3,14 +3,15 @@ version: '3.7'
 volumes:
   db:
 
+
 networks:
   app_net:
+
 
 services:
   backend:
     image: backend
     container_name: backend
-    restart: always
     networks:
       app_net:
     ports:
@@ -21,7 +22,6 @@ services:
   db:
     image: postgres:14.1
     container_name: db
-    restart: always
     networks:
       app_net:
     ports:

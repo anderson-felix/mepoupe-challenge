@@ -20,13 +20,17 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.1.2",
+    "axios-adapter-logger": "^0.1.2",
     "celebrate": "^13.0.4",
+    "cli-color": "^2.0.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "pg": "^8.5.1",
+    "pino": "^8.6.1",
+    "pino-pretty": "^9.1.1",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.4.0",
     "typeorm": "^0.2.29"
@@ -39,6 +43,8 @@
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
+    "@types/axios": "^0.14.0",
+    "@types/cli-color": "^2.0.2",
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.9",
     "@types/faker": "5.5",

@@ -29,6 +29,7 @@ averageRouter.get(
   }),
   throwAverageError,
 );
+
 averageRouter.get('/', throwAverageError);
 
 export default averageRouter;

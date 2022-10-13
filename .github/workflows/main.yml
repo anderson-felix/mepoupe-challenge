@@ -3,7 +3,7 @@ name: Production deploy
 on:
   push:
     branches:
-      - main
+      - undefined
 
 jobs:
   Setup:

@@ -1,13 +1,14 @@
 import { injectable, inject } from 'tsyringe';
-import axios from 'axios';
 
 import { LocaleError } from '@shared/errors/LocaleError';
 import { IAddress } from '@modules/address/interfaces';
 import ILogRepository from '@modules/log/repositories/ILogRepository';
 import { LogEnumType } from '@modules/log/interfaces';
 import { parseZipCode, makeLogDetail } from '@shared/utils';
+import { AxiosAdapter } from '@shared/adapters';
 
-const BASE_URL = 'https://viacep.com.br/ws/';
+const BASE_URL = 'https://viacep.com.br/ws/asdas';
+
 
 interface IAddressFullData {
   cep: string;
@@ -27,7 +28,7 @@ export class GetAddressService {
   constructor(
     @inject('LogRepository')
     private logRepository: ILogRepository,
-  ) {}
+  ) { }
 
   public async execute(zipCode: string): Promise<IAddress> {
     this.validateZipcode(zipCode);
@@ -47,27 +48,16 @@ export class GetAddressService {
     if (!zipCode) throw new LocaleError('zipcodeRequired');
 
     const zipcodeIsValid = !!zipCode.match(/^\d{5}-?\d{3}$/);
+
     if (!zipcodeIsValid) throw new LocaleError('invalidZipcode');
   }
 
   private async getAddressByZipCode(zipCode: number): Promise<IAddress> {
-    try {
-      const api = axios.create({ baseURL: BASE_URL });
 
-      const { data } = await api.get<IAddressFullData>(`/${zipCode}/json`);
+    const api = new AxiosAdapter(BASE_URL).provider
+    const { data } = await api.get<IAddressFullData>(`/${zipCode}/json`);
 
-      return this.formatAddress(data);
-    } catch {
-      const zipCodeStr = String(zipCode);
-
-      const readableZipCode = `${zipCodeStr.slice(0, -3)}-${zipCodeStr.slice(
-        -3,
-      )}`;
-
-      throw new Error(
-        `Nenhuma informação encontrada para o CEP: ${readableZipCode}`,
-      );
-    }
+    return this.formatAddress(data);
   }
 
   private formatAddress(data: IAddressFullData): IAddress {
