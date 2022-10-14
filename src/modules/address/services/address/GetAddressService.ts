@@ -7,10 +7,10 @@ import { LogEnumType } from '@modules/log/interfaces';
 import { parseZipCode, makeLogDetail } from '@shared/utils';
 import { AxiosAdapter } from '@shared/adapters';
 
-const BASE_URL = 'https://viacep.com.br/ws/asdas';
+const BASE_URL = 'https://viacep.com.br/ws';
 
 
-interface IAddressFullData {
+export interface IAddressFullData {
   cep: string;
   logradouro: string;
   complemento: string;

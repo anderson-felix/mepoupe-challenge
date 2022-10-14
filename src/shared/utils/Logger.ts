@@ -7,6 +7,7 @@ export class Logger implements ILogger {
   formateDate(date: Date): string {
     return date.getFullYear() + "/" + ((date.getMonth() + 1)) + "/" + (date.getDate()) + " às " + (date.getHours()) + ":" + (date.getMinutes()) + ":" + (date.getSeconds())
   }
+
   formateMiddleLog(data: IDataLogger): string {
     let success = clc.green(data.success)
     if (!data.success) {
