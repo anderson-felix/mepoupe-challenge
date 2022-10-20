@@ -5,7 +5,8 @@ import { IAddress } from '@modules/address/interfaces';
 import ILogRepository from '@modules/log/repositories/ILogRepository';
 import { LogEnumType } from '@modules/log/interfaces';
 import { parseZipCode, makeLogDetail } from '@shared/utils';
-import { AxiosAdapter } from '@shared/adapters';
+import { makeHttpProvider } from '@shared/adapters';
+import { SERVICE_TYPE } from '@shared/adapters/interfaces';
 
 const BASE_URL = 'https://viacep.com.br/ws';
 
@@ -53,8 +54,9 @@ export class GetAddressService {
   }
 
   private async getAddressByZipCode(zipCode: number): Promise<IAddress> {
+    const type = 'axios'
 
-    const api = new AxiosAdapter(BASE_URL).provider
+    const api = makeHttpProvider(type, { baseURL: BASE_URL, objetive: 'buscar o CEP informado pelo usuário', serviceType: SERVICE_TYPE.VIA_CEP })
     const { data } = await api.get<IAddressFullData>(`/${zipCode}/json`);
 
     return this.formatAddress(data);

@@ -3,7 +3,9 @@ export type LocaleErrorType =
   | 'invalidZipcode'
   | 'invalidInput'
   | 'inputRequired'
-  | 'addressNotFound';
+  | 'addressNotFound'
+  | 'operationNotPermitted'
+  | 'invalidFileType';
 
 export const localeErrorLanguage = <const>['pt', 'en'];
 
@@ -52,6 +54,20 @@ export const localeErrors: Record<LocaleErrorType, LocaleErrorObject> = {
     message: {
       pt: 'Endereço não encontrado',
       en: 'Address not found',
+    },
+  },
+  operationNotPermitted: {
+    status: 403,
+    message: {
+      pt: 'Operação não permitida',
+      en: 'Operation not permitted',
+    },
+  },
+  invalidFileType: {
+    status: 400,
+    message: {
+      pt: 'Formato de arquivo inválido',
+      en: 'Invalid file format',
     },
   },
 };

@@ -8,7 +8,9 @@ const { log } = console;
 const info = (value: string) => log(blue(value));
 
 const logger: FuncType = (req, res, next) => {
-  info(`call ${new Date().toLocaleString()} - ${req.method} ${req.originalUrl}`);
+  const data = JSON.stringify({ body: req.body, params: req.params, query: req.query }, null, 2)
+  info(`call ${new Date().toLocaleString()} - ${req.method} ${process.env.APP_API_URL}${req.originalUrl}`);
+  info(`data: ${data}`);
   next();
 };
 
